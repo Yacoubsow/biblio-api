@@ -7,7 +7,7 @@ import main
 @pytest.fixture
 def client(tmp_path, monkeypatch):
     monkeypatch.setattr(main, "DB", str(tmp_path / "test.db"))
-    main.init_db()                       # base temporaire, vide
+    main.init_db()                       
     return TestClient(main.app)
 
 

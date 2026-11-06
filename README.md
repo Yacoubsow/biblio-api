@@ -9,7 +9,7 @@ python -m venv .venv
 pip install -r requirements.txt
 
 
-# j'ai lancé avec 
+# j'ai lancé avec :
 fastapi dev main.py
 
 le Serveur : http://127.0.0.1:8000
