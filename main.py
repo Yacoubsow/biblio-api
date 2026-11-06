@@ -18,7 +18,7 @@ class Livre(LivreIn):
     id: int
 
 
-# Base de données SQLite -
+
 DB = "biblio.db"
 
 
@@ -53,7 +53,7 @@ def get_db():
 Db = Annotated[sqlite3.Connection, Depends(get_db)]
 
 
-#  lire un livre ou répondre 404 
+
 def lire_ou_404(db: sqlite3.Connection, livre_id: int) -> dict:
     ligne = db.execute(
         "SELECT * FROM livre WHERE id = ?", (livre_id,)).fetchone()
