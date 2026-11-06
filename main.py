@@ -6,7 +6,7 @@ from fastapi import Depends, FastAPI, HTTPException, Query, status
 from pydantic import BaseModel, ConfigDict, Field
 
 
-class LivreIn(BaseModel):                     
+class LivreIn(BaseModel):
     model_config = ConfigDict(str_strip_whitespace=True)
     titre: str = Field(min_length=1, max_length=200)
     auteur: str = Field(min_length=1, max_length=100)
@@ -14,9 +14,8 @@ class LivreIn(BaseModel):
     genre: str | None = Field(default=None, min_length=1, max_length=50)
 
 
-class Livre(LivreIn):                         
+class Livre(LivreIn):
     id: int
-
 
 
 DB = "biblio.db"
@@ -34,24 +33,23 @@ def init_db():
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    init_db()                                  
+    init_db()
     yield
 
 
 app = FastAPI(title="API Bibliothèque", lifespan=lifespan)
 
 
-def get_db():                                  
+def get_db():
     conn = sqlite3.connect(DB, check_same_thread=False)
     conn.row_factory = sqlite3.Row
     try:
         yield conn
     finally:
-        conn.close()                          
+        conn.close()
 
 
 Db = Annotated[sqlite3.Connection, Depends(get_db)]
-
 
 
 def lire_ou_404(db: sqlite3.Connection, livre_id: int) -> dict:
@@ -60,7 +58,6 @@ def lire_ou_404(db: sqlite3.Connection, livre_id: int) -> dict:
     if ligne is None:
         raise HTTPException(status_code=404, detail="Livre introuvable")
     return dict(ligne)
-
 
 
 @app.get("/")
